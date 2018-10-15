@@ -16,9 +16,9 @@ express()
       const collection = client.db("test").collection("devices");
       console.log("test");      
       // perform actions on the collection object
-      client.close();
+     
      });     
-
+     test.client.close()
     
     res.send("Project initialiser")
   
