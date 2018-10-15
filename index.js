@@ -11,6 +11,21 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => {
 
+    mongoose.connect(uri);
+    var db = mongoose.connection()
+
+    db.on("success", () => {
+
+      console.log("succes");
+
+    });
+
+    db.on("error", () => {
+
+      console.log("error");
+
+    });
+
     console.log("efmohezfpio");
     
     res.send("Project initialiser")
