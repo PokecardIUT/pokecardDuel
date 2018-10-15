@@ -12,12 +12,16 @@ express()
   .get('/', (req, res) => {
 
     console.log("efmohezfpio");
-    var test = MongoClient.connect(uri, function(err, client) {
+    var test;
+    MongoClient.connect(uri, function(err, client) {
       const collection = client.db("test").collection("devices");
+      test = client;
       console.log("test");      
       // perform actions on the collection object
-     });     
+    });     
     
+    test.close();
+
     
     res.send("Project initialiser")
   
