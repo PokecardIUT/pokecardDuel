@@ -12,7 +12,7 @@ express()
   .get('/', (req, res) => {
 
     mongoose.connect(uri);
-    var db = mongoose.connection()
+    var db = mongoose.connection;
 
     db.on("success", () => {
 
