@@ -10,6 +10,8 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => {
+
+    console.log("efmohezfpio");
     var test = MongoClient.connect(uri, function(err, client) {
       const collection = client.db("test").collection("devices");
       console.log("test");
