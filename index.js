@@ -14,9 +14,7 @@ express()
     console.log("efmohezfpio");
     var test = MongoClient.connect(uri, function(err, client) {
       const collection = client.db("test").collection("devices");
-      console.log("test");
-      res.send("Connecter")
-      
+      console.log("test");      
       // perform actions on the collection object
       client.close();
      });     
