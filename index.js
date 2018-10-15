@@ -14,7 +14,8 @@ express()
     console.log("efmohezfpio");
     var test = MongoClient.connect(uri, function(err, client) {
       const collection = client.db("Pokecard").collection("User");
-      console.log(collection);
+      console.log(err);
+      console.log(client);
 
       // perform actions on the collection object
       client.close();
