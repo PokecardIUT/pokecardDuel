@@ -22,7 +22,7 @@ express()
       client.close();
      });     
 */
-  var db = mongojs('mongodb+srv://loic:admin123@pokecardduel-f4df5.mongodb.net/Pokecard?retryWrites=true', ['User'])
+  var db = mongojs('mongodb+srv://loic:admin123@pokecardduel-f4df5.mongodb.net/Pokecard', ['User'])
     db.on('error', function (err) {
         console.log('database error', err)
     })
