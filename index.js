@@ -13,22 +13,19 @@ express()
   .get('/', (req, res) => {
 
 
-    var conn = require('mongoskin').db('mongodb+srv://loic:admin123@pokecardduel-f4df5.mongodb.net/pokecard?retryWrites=true').db
-    console.log(conn);
+    MongoClient.connect(uri, function(err, client) {
+      if(err) {
+           console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
+      }
+      console.log('Connected...');
+      const collection = client.db("Pokecard").collection("Users");
+      console.log(collection.find());
 
-    /*console.log("efmohezfpio");
-    var test = MongoClient.connect(uri, function(err, client) {
-      const collection = client.db("Pokecard").collection("User");
-      console.log(err);
-      console.log(client);
-
-      // perform actions on the collection object
       client.close();
-     });     
-
+   });
  
 
-*/
+
     
     res.send("Project initialiser")
   
