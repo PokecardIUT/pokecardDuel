@@ -12,26 +12,6 @@ app.use( bodyParser.json() );
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-
-app.all('/*', function(req, res, next) {
-  // CORS headers
-  res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  // Set custom headers for CORS
-  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
-  if (req.method == 'OPTIONS') {
-    res.status(200).end();
-  } else {
-    next();
-  }
-});
-
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
 app.use('/', require('./routes'));
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))

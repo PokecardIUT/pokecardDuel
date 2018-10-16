@@ -15,3 +15,5 @@ router.get('/', (req, res) => {
     res.send("Project initialiser")
   
 })
+
+module.exports = router;
