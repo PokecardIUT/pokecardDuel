@@ -16,7 +16,7 @@ express()
     var conn = require('mongoskin').db('mongodb+srv://loic:admin123@pokecardduel-f4df5.mongodb.net/pokecard?retryWrites=true').db
     console.log(conn);
 
-    console.log("efmohezfpio");
+    /*console.log("efmohezfpio");
     var test = MongoClient.connect(uri, function(err, client) {
       const collection = client.db("Pokecard").collection("User");
       console.log(err);
@@ -28,7 +28,7 @@ express()
 
  
 
-
+*/
     
     res.send("Project initialiser")
   
