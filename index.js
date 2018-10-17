@@ -11,7 +11,7 @@ app.use( bodyParser.json() );
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-app.use('/', require('./routes'));
+app.use('/', require('./routes/routes'));
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
