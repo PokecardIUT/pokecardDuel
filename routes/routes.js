@@ -9,6 +9,6 @@ router.get('/',about.aboutApi);
 
 // AUTH
 
-router.post('/login', auth.login);
+router.post('/login', auth.loginWithEmail);
 
 module.exports = router;
