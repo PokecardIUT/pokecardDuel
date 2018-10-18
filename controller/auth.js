@@ -28,14 +28,7 @@ var auth = {
 
           if (isMatch == true) {
             mongoose.connection.close();
-            var conn = mongoose.connect(URL_ALL, { useNewUrlParser: true }).then(
-              () => {
-                res.json(message.success.login);
-              },
-              err => {
-                res.json(message.error.database);
-              }
-            );
+            res.json(message.success.login);
           } else {
             res.json(message.error.authentication);
           }
@@ -82,6 +75,7 @@ var auth = {
 
           }
           else {
+            mongoose.connection.close();
             res.json(message.success.ajout);
           }
         });
