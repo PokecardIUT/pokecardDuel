@@ -48,6 +48,54 @@ var auth = {
 
     });
 
+  },
+
+  signup: function (req, res) {
+
+    mongoose.connect(URL_ALL, { useNewUrlParser: true }).then(
+      () => {
+      },
+      err => {
+        res.json(message.error.database);
+      }
+    );
+
+
+    // create a user a new user
+    var tmpUser = new User({
+      username: req.body.username,
+      password: req.body.password
+    });
+
+
+    User.findOne({ username: req.body.username }, function (err, user) {
+      if (err) {
+        res.json(message.error.database);
+
+      }
+
+      if (user == null) {
+        // save user to database
+        tmpUser.save(function (err) {
+          if (err) {
+            res.json(message.error.database);
+
+          }
+          else {
+            res.json(message.success.ajout);
+          }
+        });
+      }
+      else {
+        res.json(message.error.emailUse);
+
+      }
+
+
+    });
+
+
+
   }
 
 }
@@ -55,13 +103,3 @@ var auth = {
 module.exports = auth
 
 
-// // create a user a new user
-// var testUser = new User({
-//   username: 'jmar777',
-//   password: 'Password123';
-// });
-
-// // save user to database
-// testUser.save(function(err) {
-//   if (err) throw err;
-// });

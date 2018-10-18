@@ -9,6 +9,7 @@ router.get('/',about.aboutApi);
 
 // AUTH
 
-router.post('/login', auth.loginWithEmail);
+router.post('/login/email', auth.loginWithEmail);
+router.post('/signup', auth.signup);
 
 module.exports = router;
