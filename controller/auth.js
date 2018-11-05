@@ -32,7 +32,7 @@ var auth = {
             mongoose.connection.close();
             var successConnection = {
               success: message.success.login,
-              token: genToken(username)
+              token: genToken(req.body.username)
             }
             res.json(successConnection);
           } else {
