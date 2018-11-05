@@ -27,11 +27,14 @@ var auth = {
       if (user != null) {
         user.comparePassword(req.body.password, function(err, isMatch) {
           if (err) throw err;
-          console.log(isMatch);
 
           if (isMatch == true) {
             mongoose.connection.close();
-            res.json(message.success.login);
+            var successConnection = {
+              success: message.success.login,
+              token: genToken(username)
+            }
+            res.json(successConnection);
           } else {
             res.json(message.error.authentication);
           }
@@ -82,5 +85,18 @@ var auth = {
     });
   }
 };
+
+function genToken(username) {
+  var expires = expiresIn(7); // 7 days
+  var token = jwt.encode({
+    exp: expires
+  }, require('../config/secret')());
+
+  return {
+    token: token,
+    expires: expires,
+    username: username
+  };
+}
 
 module.exports = auth;
