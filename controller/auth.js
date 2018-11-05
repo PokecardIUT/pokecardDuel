@@ -1,3 +1,4 @@
+const jwt = require('jwt-simple');
 const mongoose = require("mongoose");
 const URL_READ =
   "mongodb://Lire:admin123@pokecardduel-shard-00-00-f4df5.mongodb.net:27017,pokecardduel-shard-00-01-f4df5.mongodb.net:27017,pokecardduel-shard-00-02-f4df5.mongodb.net:27017/Pokecard?ssl=true&replicaSet=PokecardDuel-shard-0&authSource=admin&retryWrites=true";
@@ -6,6 +7,7 @@ const URL_ALL =
 var User = require("../model/UserSchema.js");
 const message = require("../message/message.js");
 mongoose.set("useCreateIndex", true);
+
 
 var auth = {
   loginWithEmail: function(req, res) {
