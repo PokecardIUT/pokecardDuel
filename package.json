@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/ronzierLoic/pokecard#readme",
   "dependencies": {
-    "express": "^4.16.4",
-    "body-parser": "^1.18.3",
-    "mongoose": "^5.3.4",
     "bcrypt-nodejs": "^0.0.3",
-    "jwt-simple": "^0.2.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jwt-simple": "^0.5.5",
+    "mongoose": "^5.3.4",
     "morgan": "^1.3.1"
   }
 }
