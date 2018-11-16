@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
+app.all('/api/*', [require('./middlewares/validateRequest')]);
+
 app.use('/', require('./routes/routes'));
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
