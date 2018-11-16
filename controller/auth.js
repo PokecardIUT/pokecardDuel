@@ -1,17 +1,16 @@
+const jwt = require('jwt-simple');
 const mongoose = require("mongoose");
-const URL_READ =
-  "mongodb://Lire:admin123@pokecardduel-shard-00-00-f4df5.mongodb.net:27017,pokecardduel-shard-00-01-f4df5.mongodb.net:27017,pokecardduel-shard-00-02-f4df5.mongodb.net:27017/Pokecard?ssl=true&replicaSet=PokecardDuel-shard-0&authSource=admin&retryWrites=true";
-const URL_ALL =
-  "mongodb://loic:admin123@pokecardduel-shard-00-00-f4df5.mongodb.net:27017,pokecardduel-shard-00-01-f4df5.mongodb.net:27017,pokecardduel-shard-00-02-f4df5.mongodb.net:27017/Pokecard?ssl=true&replicaSet=PokecardDuel-shard-0&authSource=admin&retryWrites=true";
+var urlDatabase = require("../config/database");
 var User = require("../model/UserSchema.js");
 const message = require("../message/message.js");
 mongoose.set("useCreateIndex", true);
+
 
 var auth = {
   loginWithEmail: function(req, res) {
     mongoose
       .connect(
-        URL_READ,
+        urlDatabase.URL_READ,
         { useNewUrlParser: true }
       )
       .then(
@@ -27,11 +26,14 @@ var auth = {
       if (user != null) {
         user.comparePassword(req.body.password, function(err, isMatch) {
           if (err) throw err;
-          console.log(isMatch);
 
           if (isMatch == true) {
             mongoose.connection.close();
-            res.json(message.success.login);
+            var successConnection = {
+              success: message.success.login,
+              token: genToken(req.body.username)
+            }
+            res.json(successConnection);
           } else {
             res.json(message.error.authentication);
           }
@@ -45,7 +47,7 @@ var auth = {
   signup: function(req, res) {
     mongoose
       .connect(
-        URL_ALL,
+        urlDatabase.URL_ALL,
         { useNewUrlParser: true }
       )
       .then(
@@ -82,5 +84,23 @@ var auth = {
     });
   }
 };
+
+function genToken(username) {
+  var expires = expiresIn(7); // 7 days
+  var token = jwt.encode({
+    exp: expires
+  }, require('../config/secret')());
+
+  return {
+    token: token,
+    expires: expires,
+    username: username
+  };
+}
+
+function expiresIn(numDays) {
+  var dateObj = new Date();
+  return dateObj.setDate(dateObj.getDate() + numDays);
+}
 
 module.exports = auth;
