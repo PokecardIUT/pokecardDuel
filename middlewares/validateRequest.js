@@ -6,8 +6,11 @@ var verifToken = function(req, res, next) {
   var key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
 
   if (token || key) {
+    console.log(token)
+    console.log(key)
     try {
-      var decoded = decode(token, require('../config/secret.js')());
+      var decoded = jwt.decode(token, require('../config/secret.js')());
+      console.log(decoded);
 
       if (decoded.exp <= Date.now()) {
         res.status(400);
