@@ -16,5 +16,6 @@ router.post("/signup", auth.signup);
 // API
 
 router.get("/api/test", api.test);
+router.get("/api/decks", api.getDeck);
 
 module.exports = router;
