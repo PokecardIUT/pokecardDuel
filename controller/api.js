@@ -1,28 +1,25 @@
 const jwt = require("jwt-simple");
 const mongoose = require("mongoose");
-var urlDatabase = require("../config/database")
+var urlDatabase = require("../config/database");
 var User = require("../model/UserSchema.js");
 const message = require("../message/message.js");
-const apiPokemonTGC = require("pokemontcgsdk").set;
+require("isomorphic-fetch");
+
+const API_URL_CARDS = "https://api.pokemontcg.io/v1/sets";
 
 var api = {
-  test: function(req, res) {
-    mongoose
-      .connect(
-        urlDatabase.URL_ALL,
-        { useNewUrlParser: true }
-      )
-      .then(
-        () => {
-          res.send("Succes !!");
-        },
-        err => {
-          res.json(message.error.database);
-        }
-      );
-  },
-  getDeck: function(req,res){
-    apiPokemonTGC.where({}).then(data => res.json(data));
+  getSets: function(req, res) {
+    const url = `${API_URL_CARDS}`;
+    fetch(url)
+      .then(response => response.json())
+      .then(sets => {
+        console.log(sets)
+        return res.json(sets);
+      })
+      .catch(error => {
+        console.log(error)
+        return res.json(error);
+      });
   }
 };
 
