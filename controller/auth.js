@@ -1,24 +1,18 @@
-const jwt = require('jwt-simple');
+const jwt = require("jwt-simple");
 const mongoose = require("mongoose");
 var urlDatabase = require("../config/database");
 var User = require("../model/UserSchema.js");
 const message = require("../message/message.js");
 mongoose.set("useCreateIndex", true);
 
-
 var auth = {
   loginWithEmail: function(req, res) {
-    mongoose
-      .connect(
-        urlDatabase.URL_READ,
-        { useNewUrlParser: true }
-      )
-      .then(
-        () => {},
-        err => {
-          res.json(message.error.database);
-        }
-      );
+    mongoose.connect(urlDatabase.URL_READ, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
 
     User.findOne({ username: req.body.username }, function(err, user) {
       if (err) throw err;
@@ -32,7 +26,7 @@ var auth = {
             var successConnection = {
               success: message.success.login,
               token: genToken(req.body.username)
-            }
+            };
             res.json(successConnection);
           } else {
             res.json(message.error.authentication);
@@ -45,17 +39,12 @@ var auth = {
   },
 
   signup: function(req, res) {
-    mongoose
-      .connect(
-        urlDatabase.URL_ALL,
-        { useNewUrlParser: true }
-      )
-      .then(
-        () => {},
-        err => {
-          res.json(message.error.database);
-        }
-      );
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
 
     // create a user a new user
     var tmpUser = new User({
@@ -82,14 +71,101 @@ var auth = {
         res.json(message.error.emailUse);
       }
     });
+  },
+
+  loginWithService: function(req, res) {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
+
+    User.findOne({ username: req.body.username }, function(err, user) {
+      if (err) throw err;
+
+      if (user != null) {
+        var successConnection = {
+          success: message.success.login,
+          token: genToken(req.body.username)
+        };
+        res.json(successConnection);
+      } else {
+        console.log(generateRandomString(20));
+        var tmpUser = new User({
+          username: req.body.username,
+          password: ""
+        });
+
+        tmpUser.save(function(err) {
+          console.log(err);
+          if (err) {
+            res.json(message.error.database);
+          } else {
+            mongoose.connection.close();
+            res.json(message.success.ajout);
+          }
+        });
+      }
+    });
   }
 };
 
+function generateRandomString(size) {
+  console.log("ted")
+  var ListChar = new Array(
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+  );
+  var randomString = "";
+  for (i = 0; i < size; i++) {
+    randomString = randomString + ListChar[Math.floor(Math.random() * ListChar.length)];
+  }
+  return randomString;
+}
+
 function genToken(username) {
   var expires = expiresIn(7); // 7 days
-  var token = jwt.encode({
-    exp: expires
-  }, require('../config/secret')());
+  var token = jwt.encode(
+    {
+      exp: expires
+    },
+    require("../config/secret")()
+  );
 
   return {
     token: token,
