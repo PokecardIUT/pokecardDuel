@@ -17,4 +17,11 @@ router.post("/signup", auth.signup);
 
 router.get("/api/decks", api.getSets);
 
+router.get("/api/cards/:id/all", api.getAllCardsBySet);
+
+//Parms : 
+//page -> number of page
+//pageSize -> number of card in one page
+router.get("/api/cards/:id", api.getCardBySetAndPage);
+
 module.exports = router;
