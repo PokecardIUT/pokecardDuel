@@ -21,6 +21,20 @@ var message = {
       message: "Cette carte a déjà été ajoutée"
     }
   },
+  token: {
+    invalid: {
+      code: 401,
+      message: "Invalid Token or Key"
+    },
+    wrong: {
+      code: 500,
+      message: "Oops something went wrong"
+    },
+    expired: {
+      code: 400,
+      message: "Token Expired"
+    }
+  },
   success: {
     login: {
       code: 200,

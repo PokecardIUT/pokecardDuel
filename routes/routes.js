@@ -12,13 +12,15 @@ router.get("/", about.aboutApi);
 
 router.post("/login/email", auth.loginWithEmail);
 router.post("/signup", auth.signup);
-router.post("/cardUpdate", auth.addCardToUser)
+router.post("/login/service", auth.loginWithService);
 
 // API
 
 router.get("/api/decks", api.getSets);
 
 router.get("/api/cards/:id/all", api.getAllCardsBySet);
+
+router.post("/cardUpdate", api.addCardToUser)
 
 //Parms : 
 //page -> number of page
