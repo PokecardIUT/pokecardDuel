@@ -48,7 +48,7 @@ var message = {
 
     updateCard: {
       code: 200,
-      message: "Carte ajouté"
+      message: "Cartes mises à jour"
     }
   }
 };

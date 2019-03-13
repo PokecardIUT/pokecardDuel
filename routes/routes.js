@@ -20,7 +20,9 @@ router.get("/api/decks", api.getSets);
 
 router.get("/api/cards/:id/all", api.getAllCardsBySet);
 
-router.post("/cardUpdate", api.addCardToUser)
+router.post("/api/cardUpdate", api.addCardToUser)
+
+router.post("/api/cardRemove", api.removeCardToUser)
 
 //Parms : 
 //page -> number of page
