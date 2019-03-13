@@ -7,19 +7,24 @@ const message = require("../message/message.js");
 mongoose.set("useCreateIndex", true);
 
 var auth = {
-  loginWithEmail: function(req, res) {
-    mongoose.connect(urlDatabase.URL_READ, { useNewUrlParser: true }).then(
-      () => {},
-      err => {
-        res.json(message.error.database);
-      }
-    );
+  loginWithEmail: function (req, res) {
+    mongoose
+      .connect(
+        urlDatabase.URL_READ,
+        { useNewUrlParser: true }
+      )
+      .then(
+        () => { },
+        err => {
+          res.json(message.error.database);
+        }
+      );
 
-    User.findOne({ username: req.body.username }, function(err, user) {
+    User.findOne({ username: req.body.username }, function (err, user) {
       if (err) throw err;
 
       if (user != null) {
-        user.comparePassword(req.body.password, function(err, isMatch) {
+        user.comparePassword(req.body.password, function (err, isMatch) {
           if (err) throw err;
 
           if (isMatch == true) {
@@ -39,13 +44,18 @@ var auth = {
     });
   },
 
-  signup: function(req, res) {
-    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => {},
-      err => {
-        res.json(message.error.database);
-      }
-    );
+  signup: function (req, res) {
+    mongoose
+      .connect(
+        urlDatabase.URL_ALL,
+        { useNewUrlParser: true }
+      )
+      .then(
+        () => { },
+        err => {
+          res.json(message.error.database);
+        }
+      );
 
     // create a user a new user
     var tmpUser = new User({
@@ -53,14 +63,14 @@ var auth = {
       password: req.body.password
     });
 
-    User.findOne({ username: req.body.username }, function(err, user) {
+    User.findOne({ username: req.body.username }, function (err, user) {
       if (err) {
         res.json(message.error.database);
       }
 
       if (user == null) {
         // save user to database
-        tmpUser.save(function(err) {
+        tmpUser.save(function (err) {
           if (err) {
             res.json(message.error.database);
           } else {
@@ -74,9 +84,9 @@ var auth = {
     });
   },
 
-  loginWithService: function(req, res) {
+  loginWithService: function (req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => {},
+      () => { },
       err => {
         res.json(message.error.database);
       }
@@ -84,7 +94,7 @@ var auth = {
     var result = isValidJwt(req.body.token);
 
     if (result === "valid") {
-      User.findOne({ username: req.body.username }, function(err, user) {
+      User.findOne({ username: req.body.username }, function (err, user) {
         if (err) throw err;
 
         if (user != null) {
@@ -99,7 +109,7 @@ var auth = {
             password: generateRandomString(20)
           });
 
-          tmpUser.save(function(err) {
+          tmpUser.save(function (err) {
             if (err) {
               res.json(message.error.database);
             } else {

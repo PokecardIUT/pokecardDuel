@@ -11,6 +11,14 @@ var message = {
     emailUse: {
       code: 403,
       message: "Email déjà utilisé"
+    },
+    noUser: {
+      code: 403,
+      message: "Cet utilisateur n'existe pas"
+    },
+    existantCard: {
+      code: 403,
+      message: "Cette carte a déjà été ajoutée"
     }
   },
   token: {
@@ -36,6 +44,11 @@ var message = {
     ajout: {
       code: 200,
       message: "Vous êtes inscrit"
+    },
+
+    updateCard: {
+      code: 200,
+      message: "Carte ajouté"
     }
   }
 };
