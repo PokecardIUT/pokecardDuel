@@ -1,4 +1,5 @@
 var isValidJwt = require("./decodeJwt.js");
+const message = require("../message/message.js");
 
 var verifToken = function(req, res, next) {
   var token =
@@ -15,25 +16,16 @@ var verifToken = function(req, res, next) {
 
     if (result === "expired") {
       res.status(400);
-      res.json({
-        status: 400,
-        message: "Token Expired"
-      });
+      res.json(message.token.expired);
       return;
-    } else if(result === "err") {
+    } else if (result === "err") {
       res.status(500);
-      res.json({
-        status: 500,
-        message: "Oops something went wrong",
-      });
+      res.json(message.token.wrong);
     }
     next();
   } else {
     res.status(401);
-    res.json({
-      status: 401,
-      message: "Invalid Token or Key"
-    });
+    res.json(message.token.invalid);
     return;
   }
 };

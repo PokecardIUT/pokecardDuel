@@ -115,10 +115,7 @@ var auth = {
       });
     } else {
       res.status(500);
-      res.json({
-        status: 500,
-        message: "Oops something went wrong",
-      });
+      res.json(message.token.wrong);
     }
   }
 };
