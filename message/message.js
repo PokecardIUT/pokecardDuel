@@ -15,6 +15,10 @@ var message = {
     noUser: {
       code: 403,
       message: "Cet utilisateur n'existe pas"
+    },
+    existantCard: {
+      code: 403,
+      message: "Cette carte a déjà été ajoutée"
     }
   },
   success: {

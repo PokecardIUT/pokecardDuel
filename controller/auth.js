@@ -7,24 +7,24 @@ mongoose.set("useCreateIndex", true);
 
 
 var auth = {
-  loginWithEmail: function(req, res) {
+  loginWithEmail: function (req, res) {
     mongoose
       .connect(
         urlDatabase.URL_READ,
         { useNewUrlParser: true }
       )
       .then(
-        () => {},
+        () => { },
         err => {
           res.json(message.error.database);
         }
       );
 
-    User.findOne({ username: req.body.username }, function(err, user) {
+    User.findOne({ username: req.body.username }, function (err, user) {
       if (err) throw err;
 
       if (user != null) {
-        user.comparePassword(req.body.password, function(err, isMatch) {
+        user.comparePassword(req.body.password, function (err, isMatch) {
           if (err) throw err;
 
           if (isMatch == true) {
@@ -44,14 +44,14 @@ var auth = {
     });
   },
 
-  signup: function(req, res) {
+  signup: function (req, res) {
     mongoose
       .connect(
         urlDatabase.URL_ALL,
         { useNewUrlParser: true }
       )
       .then(
-        () => {},
+        () => { },
         err => {
           res.json(message.error.database);
         }
@@ -63,14 +63,14 @@ var auth = {
       password: req.body.password
     });
 
-    User.findOne({ username: req.body.username }, function(err, user) {
+    User.findOne({ username: req.body.username }, function (err, user) {
       if (err) {
         res.json(message.error.database);
       }
 
       if (user == null) {
         // save user to database
-        tmpUser.save(function(err) {
+        tmpUser.save(function (err) {
           if (err) {
             res.json(message.error.database);
           } else {
@@ -80,40 +80,6 @@ var auth = {
         });
       } else {
         res.json(message.error.emailUse);
-      }
-    });
-  },
-  addCardToUser: function(req, res) {
-    mongoose
-      .connect(
-        urlDatabase.URL_ALL,
-        { useNewUrlParser: true }
-      )
-      .then(
-        () => {},
-        err => {
-          res.json(message.error.database);
-        }
-      );
-
-    User.findOne({ username: req.body.username }, function(err, user) {
-      if (err) {
-        res.json(message.error.database);
-      }
-
-      if (user != null) {
-        // save user to database
-        user.cards.push(req.body.cardId);
-        user.save(function(err) {
-          if (err) {
-            res.json(message.error.database);
-          } else {
-            mongoose.connection.close();
-            res.json(message.success.updateCard);
-          }
-        });
-      } else {
-        res.json(message.error.noUser);
       }
     });
   }
