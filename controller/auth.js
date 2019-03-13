@@ -1,4 +1,5 @@
 const jwt = require("jwt-simple");
+const isValidJwt = require("../middlewares/decodeJwt.js");
 const mongoose = require("mongoose");
 var urlDatabase = require("../config/database");
 var User = require("../model/UserSchema.js");
@@ -80,39 +81,49 @@ var auth = {
         res.json(message.error.database);
       }
     );
+    var result = isValidJwt(req.body.token);
 
-    User.findOne({ username: req.body.username }, function(err, user) {
-      if (err) throw err;
+    if (result === "valid") {
+      User.findOne({ username: req.body.username }, function(err, user) {
+        if (err) throw err;
 
-      if (user != null) {
-        var successConnection = {
-          success: message.success.login,
-          token: genToken(req.body.username)
-        };
-        res.json(successConnection);
-      } else {
-        console.log(generateRandomString(20));
-        var tmpUser = new User({
-          username: req.body.username,
-          password: ""
-        });
+        if (user != null) {
+          var successConnection = {
+            success: message.success.login,
+            token: genToken(req.body.username)
+          };
+          res.json(successConnection);
+        } else {
+          var tmpUser = new User({
+            username: req.body.username,
+            password: generateRandomString(20)
+          });
 
-        tmpUser.save(function(err) {
-          console.log(err);
-          if (err) {
-            res.json(message.error.database);
-          } else {
-            mongoose.connection.close();
-            res.json(message.success.ajout);
-          }
-        });
-      }
-    });
+          tmpUser.save(function(err) {
+            if (err) {
+              res.json(message.error.database);
+            } else {
+              mongoose.connection.close();
+              var successConnection = {
+                success: message.success.ajout,
+                token: genToken(req.body.username)
+              };
+              res.json(successConnection);
+            }
+          });
+        }
+      });
+    } else {
+      res.status(500);
+      res.json({
+        status: 500,
+        message: "Oops something went wrong",
+      });
+    }
   }
 };
 
 function generateRandomString(size) {
-  console.log("ted")
   var ListChar = new Array(
     "a",
     "b",
@@ -153,7 +164,8 @@ function generateRandomString(size) {
   );
   var randomString = "";
   for (i = 0; i < size; i++) {
-    randomString = randomString + ListChar[Math.floor(Math.random() * ListChar.length)];
+    randomString =
+      randomString + ListChar[Math.floor(Math.random() * ListChar.length)];
   }
   return randomString;
 }

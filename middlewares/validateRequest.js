@@ -1,4 +1,4 @@
-var jwt = require("jwt-simple");
+var isValidJwt = require("./decodeJwt.js");
 
 var verifToken = function(req, res, next) {
   var token =
@@ -11,27 +11,23 @@ var verifToken = function(req, res, next) {
     req.headers["x-key"];
 
   if (token || key) {
-    try {
-      var decoded = jwt.decode(token, require("../config/secret.js")());
+    var result = isValidJwt(token);
 
-      if (decoded.exp <= Date.now()) {
-        res.status(400);
-        res.json({
-          status: 400,
-          message: "Token Expired"
-        });
-        return;
-      }
-
-      next();
-    } catch (err) {
+    if (result === "expired") {
+      res.status(400);
+      res.json({
+        status: 400,
+        message: "Token Expired"
+      });
+      return;
+    } else if(result === "err") {
       res.status(500);
       res.json({
         status: 500,
         message: "Oops something went wrong",
-        error: err
       });
     }
+    next();
   } else {
     res.status(401);
     res.json({
