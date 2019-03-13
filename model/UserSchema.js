@@ -5,7 +5,8 @@ mongoose = require("mongoose");
 
 User = new Schema({
   username: { type: String, required: true, index: { unique: true } },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  cards: [Schema.Types.ObjectId]
 });
 
 User.pre("save", function(next) {

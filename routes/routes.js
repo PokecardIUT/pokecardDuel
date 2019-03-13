@@ -12,6 +12,7 @@ router.get("/", about.aboutApi);
 
 router.post("/login/email", auth.loginWithEmail);
 router.post("/signup", auth.signup);
+router.post("/cardUpdate", auth.addCardToUser)
 
 // API
 
