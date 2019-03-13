@@ -14,11 +14,9 @@ var api = {
     fetch(url)
       .then(response => response.json())
       .then(sets => {
-        console.log(sets);
         return res.json(sets);
       })
       .catch(error => {
-        console.log(error);
         return res.json(error);
       });
   },
@@ -29,11 +27,9 @@ var api = {
     fetch(url)
       .then(response => response.json())
       .then(cards => {
-        console.log(cards);
         return res.json(cards);
       })
       .catch(error => {
-        console.log(error);
         return res.send(error);
       });
   },
@@ -50,11 +46,9 @@ var api = {
     fetch(url)
       .then(response => response.json())
       .then(cards => {
-        console.log(cards);
         return res.json(cards);
       })
       .catch(error => {
-        console.log(error);
         return res.send(error);
       });
   },
@@ -87,6 +81,47 @@ var api = {
         else {
           req.body.card.forEach(card => {
             user.cards.push(card);
+          });
+        }
+        // save cards to user
+        user.save(function (err) {
+          if (err) {
+            res.json(message.error.database);
+          } else {
+            mongoose.connection.close();
+            res.json(message.success.updateCard);
+          }
+        });
+      } else {
+        res.json(message.error.noUser);
+      }
+    });
+  },
+  removeCardToUser: function (req, res) {
+    mongoose
+      .connect(
+        urlDatabase.URL_ALL,
+        { useNewUrlParser: true }
+      )
+      .then(
+        () => { },
+        err => {
+          res.json(message.error.database);
+        }
+      );
+
+    User.findOne({ username: req.body.username }, function (err, user) {
+      if (err) {
+        res.json(message.error.database);
+      }
+      if (user != null) {
+        if (user.cards.length != 0) {
+          req.body.card.forEach(card => {
+            user.cards = user.cards.filter(element => {
+              if (card.id !== element.id) {
+                return element;
+              }
+            });
           });
         }
         // save cards to user
