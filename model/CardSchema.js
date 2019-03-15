@@ -3,7 +3,7 @@ mongoose = require("mongoose");
 
 Card = new Schema({
     id: { type: String, index: { unique: true } },
-    imgUrl: String
-});
+    imageUrlHiRes: String
+}, { _id: false });
 
 module.exports = Card;
