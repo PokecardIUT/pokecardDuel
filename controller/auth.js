@@ -91,9 +91,8 @@ var auth = {
         res.json(message.error.database);
       }
     );
-    var result = isValidJwt(req.body.token);
 
-    if (result === "valid") {
+    if (req.body.secret === "valid") {
       User.findOne({ username: req.body.username }, function (err, user) {
         if (err) throw err;
 
