@@ -49,6 +49,11 @@ var message = {
     updateCard: {
       code: 200,
       message: "Cartes mises à jour"
+    },
+
+    userFind: {
+      code: 200,
+      message: "Utilisateur trouvé"
     }
   }
 };
