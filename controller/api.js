@@ -193,7 +193,8 @@ var api = {
       }
       
       if(user != null){
-        res.json(user);
+        let response = {...message.success.userFind, user}
+        res.json(response);
       } else {
         res.json(message.error.noUser);
       }
