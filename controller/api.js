@@ -137,45 +137,43 @@ var api = {
         res.json(message.error.database);
       }
       if (user != null) {
-        if (user.cards.length != 0) {
-          const url = `${API_URL_CARDS}?setCode=${req.query.id}&pageSize=${
-            req.query.pageSize
-          }&page=${req.query.page}`;
-          fetch(url)
-            .then(response => response.json())
-            .then(data => {
-              user.cards.forEach(element => {
-                data.cards = data.cards.filter(card => {
-                  if (card.id !== element.id) {
-                    return card;
-                  }
-                });
-              });
-
-              let cards = [];
-
-              for (let i = 0; i < req.query.nbCard; ++i) {
-                let index = Math.floor(
-                  Math.random() * Math.floor(data.cards.length - 1)
-                );
-                cards.push(data.cards[index]);
-                data.cards.splice(index, 1);
-              }
-              user.cards.push(...cards);
-
-              user.save(function(err) {
-                if (err) {
-                  res.json(message.error.database);
-                } else {
-                  mongoose.connection.close();
-                  return res.json(cards);
+        const url = `${API_URL_CARDS}?setCode=${req.query.id}&pageSize=${
+          req.query.pageSize
+        }&page=${req.query.page}`;
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            user.cards.forEach(element => {
+              data.cards = data.cards.filter(card => {
+                if (card.id !== element.id) {
+                  return card;
                 }
               });
-            })
-            .catch(error => {
-              return res.send(error);
             });
-        }
+
+            let cards = [];
+
+            for (let i = 0; i < req.query.nbCard; ++i) {
+              let index = Math.floor(
+                Math.random() * Math.floor(data.cards.length - 1)
+              );
+              cards.push(data.cards[index]);
+              data.cards.splice(index, 1);
+            }
+            user.cards.push(...cards);
+
+            user.save(function(err) {
+              if (err) {
+                res.json(message.error.database);
+              } else {
+                mongoose.connection.close();
+                return res.json(cards);
+              }
+            });
+          })
+          .catch(error => {
+            return res.send(error);
+          });
       } else {
         res.json(message.error.noUser);
       }
