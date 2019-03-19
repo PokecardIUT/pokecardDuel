@@ -198,6 +198,23 @@ var api = {
       }
     }
     )
+  },
+  getUsers: (req, res) => {
+    mongoose
+      .connect(
+        urlDatabase.URL_ALL,
+        { useNewUrlParser: true }
+      )
+      .then(
+        () => { },
+        err => {
+          res.json(message.error.database);
+        }
+      );
+    User.find((err, docs) => {
+      mongoose.connection.close();
+      res.json(docs)
+    })
   }
 };
 
