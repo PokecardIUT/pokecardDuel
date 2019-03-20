@@ -213,6 +213,39 @@ var api = {
         res.json(message.error.noUser);
       }
     });
+  },
+  getUser: function (req, res) {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => { },
+      err => {
+        res.json(message.error.database);
+      }
+    );
+
+    User.findOne({ username: req.query.username }, function (err, user) {
+      if (err) {
+        res.json(message.error.database);
+      }
+
+      if (user != null) {
+        let response = { ...message.success.userFind, user };
+        res.json(response);
+      } else {
+        res.json(message.error.noUser);
+      }
+    });
+  },
+  getUsers: (req, res) => {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => { },
+      err => {
+        res.json(message.error.database);
+      }
+    );
+    User.find((err, users) => {
+      mongoose.connection.close();
+      res.json(users);
+    });
   }
 };
 
