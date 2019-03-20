@@ -60,7 +60,9 @@ var auth = {
     // create a user a new user
     var tmpUser = new User({
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      level: 0,
+      nbWin: 0
     });
 
     User.findOne({ username: req.body.username }, function (err, user) {
@@ -105,7 +107,9 @@ var auth = {
         } else {
           var tmpUser = new User({
             username: req.body.username,
-            password: generateRandomString(20)
+            password: generateRandomString(20),
+            level: 0,
+            nbWin: 0
           });
 
           tmpUser.save(function (err) {
