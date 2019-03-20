@@ -20,7 +20,6 @@ var api = {
         return res.json(error);
       });
   },
-
   getAllCardsBySet: function(req, res) {
     const query = { id: req.params.id };
     const url = `${API_URL_CARDS}?setCode=${query.id}&pageSize=1000`;
@@ -33,7 +32,6 @@ var api = {
         return res.send(error);
       });
   },
-
   getCardBySetAndPage: function(req, res) {
     const query = {
       id: req.params.id,
@@ -52,7 +50,6 @@ var api = {
         return res.send(error);
       });
   },
-
   addCardToUser: function(req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
       () => {},
@@ -180,6 +177,28 @@ var api = {
       } else {
         res.json(message.error.noUser);
       }
+    });
+  },
+  getUser: function(req, res) {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
+
+    User.findOne({ username: req.query.username }, function(err, user) {
+      if (err) {
+        res.json(message.error.database);
+      }
+      
+      if(user != null){
+        let response = {...message.success.userFind, user}
+        res.json(response);
+      } else {
+        res.json(message.error.noUser);
+      }
+
     });
   }
 };
