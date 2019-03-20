@@ -2,7 +2,7 @@ mongoose = require("mongoose");
 (Schema = mongoose.Schema);
 
 Card = new Schema({
-    id: { type: String, index: { unique: true } },
+    id: String,
     imageUrlHiRes: String
 }, { _id: false });
 
