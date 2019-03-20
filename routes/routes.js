@@ -28,6 +28,8 @@ router.get("/api/randomCard", api.randomCard)
 
 router.get("/api/users", api.getUsers)
 
+router.get("/api/user", api.getUser);
+
 //Parms : 
 //page -> number of page
 //pageSize -> number of card in one page
