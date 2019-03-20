@@ -26,6 +26,8 @@ router.post("/api/cardRemove", api.removeCardToUser)
 
 router.get("/api/randomCard", api.randomCard)
 
+router.get("/api/cardsCount", api.getCardsCount)
+
 //Parms : 
 //page -> number of page
 //pageSize -> number of card in one page
