@@ -211,9 +211,9 @@ var api = {
           res.json(message.error.database);
         }
       );
-    User.find((err, docs) => {
+    User.find((err, users) => {
       mongoose.connection.close();
-      res.json(docs)
+      res.json(users)
     })
   }
 };
