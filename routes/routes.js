@@ -20,15 +20,17 @@ router.get("/api/decks", api.getSets);
 
 router.get("/api/cards/:id/all", api.getAllCardsBySet);
 
-router.post("/api/cardUpdate", api.addCardToUser)
+router.post("/api/cardUpdate", api.addCardToUser);
 
-router.post("/api/cardRemove", api.removeCardToUser)
+router.post("/api/cardRemove", api.removeCardToUser);
 
-router.get("/api/randomCard", api.randomCard)
+router.get("/api/randomCard", api.randomCard);
 
-router.get("/api/users", api.getUsers)
+router.get("/api/users", api.getUsers);
 
-//Parms : 
+router.post("/api/trade", api.trade);
+
+//Parms :
 //page -> number of page
 //pageSize -> number of card in one page
 router.get("/api/cards/:id", api.getCardBySetAndPage);

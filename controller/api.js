@@ -9,7 +9,7 @@ const API_URL_SETS = "https://api.pokemontcg.io/v1/sets";
 const API_URL_CARDS = "https://api.pokemontcg.io/v1/cards";
 
 var api = {
-  getSets: function (req, res) {
+  getSets: function(req, res) {
     const url = `${API_URL_SETS}`;
     fetch(url)
       .then(response => response.json())
@@ -21,7 +21,7 @@ var api = {
       });
   },
 
-  getAllCardsBySet: function (req, res) {
+  getAllCardsBySet: function(req, res) {
     const query = { id: req.params.id };
     const url = `${API_URL_CARDS}?setCode=${query.id}&pageSize=1000`;
     fetch(url)
@@ -34,7 +34,7 @@ var api = {
       });
   },
 
-  getCardBySetAndPage: function (req, res) {
+  getCardBySetAndPage: function(req, res) {
     const query = {
       id: req.params.id,
       page: req.query.page,
@@ -42,7 +42,7 @@ var api = {
     };
     const url = `${API_URL_CARDS}?setCode=${query.id}&pageSize=${
       query.pageSize
-      }&page=${query.page}`;
+    }&page=${query.page}`;
     fetch(url)
       .then(response => response.json())
       .then(cards => {
@@ -53,20 +53,15 @@ var api = {
       });
   },
 
-  addCardToUser: function (req, res) {
-    mongoose
-      .connect(
-        urlDatabase.URL_ALL,
-        { useNewUrlParser: true }
-      )
-      .then(
-        () => { },
-        err => {
-          res.json(message.error.database);
-        }
-      );
+  addCardToUser: function(req, res) {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
 
-    User.findOne({ username: req.body.username }, function (err, user) {
+    User.findOne({ username: req.body.username }, function(err, user) {
       if (err) {
         res.json(message.error.database);
       }
@@ -76,15 +71,14 @@ var api = {
             if (!user.cards.find(element => element.id === card.id)) {
               user.cards.push(card);
             }
-          })
-        }
-        else {
+          });
+        } else {
           req.body.card.forEach(card => {
             user.cards.push(card);
           });
         }
         // save cards to user
-        user.save(function (err) {
+        user.save(function(err) {
           if (err) {
             res.json(message.error.database);
           } else {
@@ -97,20 +91,15 @@ var api = {
       }
     });
   },
-  removeCardToUser: function (req, res) {
-    mongoose
-      .connect(
-        urlDatabase.URL_ALL,
-        { useNewUrlParser: true }
-      )
-      .then(
-        () => { },
-        err => {
-          res.json(message.error.database);
-        }
-      );
+  removeCardToUser: function(req, res) {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
 
-    User.findOne({ username: req.body.username }, function (err, user) {
+    User.findOne({ username: req.body.username }, function(err, user) {
       if (err) {
         res.json(message.error.database);
       }
@@ -125,7 +114,7 @@ var api = {
           });
         }
         // save cards to user
-        user.save(function (err) {
+        user.save(function(err) {
           if (err) {
             res.json(message.error.database);
           } else {
@@ -138,20 +127,15 @@ var api = {
       }
     });
   },
-  randomCard: function (req, res) {
-    mongoose
-      .connect(
-        urlDatabase.URL_ALL,
-        { useNewUrlParser: true }
-      )
-      .then(
-        () => { },
-        err => {
-          res.json(message.error.database);
-        }
-      );
+  randomCard: function(req, res) {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
 
-    User.findOne({ username: req.query.username }, function (err, user) {
+    User.findOne({ username: req.query.username }, function(err, user) {
       if (err) {
         res.json(message.error.database);
       }
@@ -159,7 +143,7 @@ var api = {
         if (user.cards.length != 0) {
           const url = `${API_URL_CARDS}?setCode=${req.query.id}&pageSize=${
             req.query.pageSize
-            }&page=${req.query.page}`;
+          }&page=${req.query.page}`;
           fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -168,24 +152,26 @@ var api = {
                   if (card.id !== element.id) {
                     return card;
                   }
-                })
-              })
+                });
+              });
 
-              let cards = []
+              let cards = [];
 
               for (let i = 0; i < req.query.nbCard; ++i) {
-                let index = Math.floor(Math.random() * Math.floor(data.cards.length - 1))
-                cards.push(data.cards[index])
-                data.cards.splice(index, 1)
+                let index = Math.floor(
+                  Math.random() * Math.floor(data.cards.length - 1)
+                );
+                cards.push(data.cards[index]);
+                data.cards.splice(index, 1);
               }
-              user.cards.push(...cards)
+              user.cards.push(...cards);
 
-              user.save(function (err) {
+              user.save(function(err) {
                 if (err) {
                   res.json(message.error.database);
                 } else {
                   mongoose.connection.close();
-                  return res.json(cards);
+                  return res.json(message.success.randomCard(data));
                 }
               });
             })
@@ -196,25 +182,85 @@ var api = {
       } else {
         res.json(message.error.noUser);
       }
-    }
-    )
+    });
   },
   getUsers: (req, res) => {
-    mongoose
-      .connect(
-        urlDatabase.URL_ALL,
-        { useNewUrlParser: true }
-      )
-      .then(
-        () => { },
-        err => {
-          res.json(message.error.database);
-        }
-      );
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
     User.find((err, users) => {
       mongoose.connection.close();
-      res.json(users)
-    })
+      res.json(message.success.users(users));
+    });
+  },
+  trade: (req, res) => {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
+    User.find((err, users) => {
+      let firstUser, secondUser;
+      users.forEach(user => {
+        if (user.username === req.body.users[0].username) {
+          firstUser = user;
+        }
+        if (user.username === req.body.users[1].username) {
+          secondUser = user;
+        }
+      });
+      if (firstUser != undefined && secondUser != undefined) {
+        let tmp = firstUser.cards.filter(element => {
+          if (req.body.cards[0].id !== element.id) {
+            return element;
+          }
+        });
+        if (tmp === undefined) {
+          res.json(message.error.existantCard);
+        } else {
+          firstUser.cards = tmp;
+
+          tmp = secondUser.cards.filter(element => {
+            if (req.body.cards[1].id !== element.id) {
+              return element;
+            }
+          });
+
+          if (tmp === undefined) {
+            res.json(message.error.existantCard);
+          } else {
+            secondUser.cards = tmp;
+
+            firstUser.cards.push(req.body.cards[1]);
+            secondUser.cards.push(req.body.cards[0]);
+
+            firstUser.save(function(err) {
+              if (err) {
+                res.json(message.error.database);
+              }
+            });
+            secondUser.save(function(err) {
+              if (err) {
+                res.json(message.error.database);
+              }
+            });
+            let data = {};
+            data[firstUser.username] =
+              "A eu cette carte: " + req.body.cards[1].id;
+            data[secondUser.username] =
+              "A eu cette carte: " + req.body.cards[0].id;
+            res.json(message.success.trade(data));
+          }
+        }
+      } else {
+        res.json(message.error.noUser);
+      }
+      mongoose.connection.close();
+    });
   }
 };
 

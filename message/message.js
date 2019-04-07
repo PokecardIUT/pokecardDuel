@@ -49,6 +49,30 @@ var message = {
     updateCard: {
       code: 200,
       message: "Cartes mises à jour"
+    },
+
+    trade: data => {
+      return {
+        code: 200,
+        message: "L'échange a bien été effectué",
+        data: data
+      };
+    },
+
+    randomCard: data => {
+      return {
+        code: 200,
+        message: "Les cartes ont bien été distribuées",
+        data: data
+      };
+    },
+
+    users: data => {
+      return {
+        code: 200,
+        message: "Voici tout les utilisateurs de la base de données",
+        data: data
+      };
     }
   }
 };
