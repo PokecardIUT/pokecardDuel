@@ -51,6 +51,11 @@ var message = {
       message: "Cartes mises à jour"
     },
 
+    updateSet: {
+      code: 200,
+      message: "Decks mis à jour"
+    },
+
     userFind: {
       code: 200,
       message: "Utilisateur trouvé"

@@ -127,6 +127,36 @@ var api = {
       }
     });
   },
+
+  addSetToUser: function (req, res) {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => { },
+      err => {
+        res.json(message.error.database);
+      }
+    );
+
+    User.findOne({ username: req.body.username }, function (err, user) {
+      if (err) {
+        res.json(message.error.database);
+      }
+      if (user != null) {
+        obj = JSON.parse(req.body.set)
+        user.sets.push(obj);
+        // save cards to user
+        user.save(function (err) {
+          if (err) {
+            res.json(message.error.database);
+          } else {
+            mongoose.connection.close();
+            res.json(message.success.updateSet);
+          }
+        });
+      } else {
+        res.json(message.error.noUser);
+      }
+    });
+  },
   getCardsCount: (req, res) => {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
       () => { },
