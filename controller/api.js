@@ -248,11 +248,16 @@ var api = {
                 res.json(message.error.database);
               }
             });
-            let data = {};
-            data[firstUser.username] =
-              "A eu cette carte: " + req.body.cards[1].id;
-            data[secondUser.username] =
-              "A eu cette carte: " + req.body.cards[0].id;
+            let data = [
+              {
+                username: firstUser.username,
+                message: "A eu cette carte: " + req.body.cards[1].id
+              },
+              {
+                username: secondUser.username,
+                message: "A eu cette carte: " + req.body.cards[0].id
+              }
+            ];
             res.json(message.success.trade(data));
           }
         }
