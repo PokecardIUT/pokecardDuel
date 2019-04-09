@@ -24,6 +24,8 @@ router.post("/api/cardUpdate", api.addCardToUser)
 
 router.post("/api/cardRemove", api.removeCardToUser)
 
+router.post("/api/setUpdate", api.addSetToUser)
+
 router.get("/api/randomCard", api.randomCard)
 
 router.get("/api/cardsCount", api.getCardsCount)
