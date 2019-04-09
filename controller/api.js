@@ -142,9 +142,7 @@ var api = {
       }
       if (user != null) {
         console.log(req.body.set)
-        req.body.set.forEach(set => {
-          user.sets.push(set);
-        });
+        user.sets.push(req.body.set);
         // save cards to user
         user.save(function (err) {
           if (err) {
