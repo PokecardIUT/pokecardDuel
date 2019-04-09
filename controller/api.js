@@ -195,9 +195,7 @@ var api = {
               cards.push(data.cards[index]);
               data.cards.splice(index, 1);
             }
-            console.log(cards)
             user.cards.push(...cards);
-            console.log(user.cards)
 
             user.save(function (err) {
               if (err) {
