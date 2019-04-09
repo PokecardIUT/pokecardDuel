@@ -141,17 +141,10 @@ var api = {
         res.json(message.error.database);
       }
       if (user != null) {
-        if (user.sets.length != 0) {
-          req.body.set.forEach(set => {
-            if (!user.sets.find(element => element.id === set.id)) {
-              user.sets.push(set);
-            }
-          });
-        } else {
-          req.body.set.forEach(set => {
-            user.sets.push(set);
-          });
-        }
+        console.log(req.body.set)
+        req.body.set.forEach(set => {
+          user.sets.push(set);
+        });
         // save cards to user
         user.save(function (err) {
           if (err) {
