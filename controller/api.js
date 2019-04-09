@@ -141,8 +141,8 @@ var api = {
         res.json(message.error.database);
       }
       if (user != null) {
-        console.log(req.body.set)
-        user.sets.push(req.body.set);
+        obj = JSON.parse(req.body.set)
+        user.sets.push(obj);
         // save cards to user
         user.save(function (err) {
           if (err) {
