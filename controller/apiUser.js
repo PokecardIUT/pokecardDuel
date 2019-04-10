@@ -19,6 +19,7 @@ var apiUser = {
       }
 
       if (user != null) {
+        user.password = "";
         let response = { ...message.success.userFind, user };
         res.json(response);
       } else {
@@ -35,6 +36,9 @@ var apiUser = {
     );
     User.find((err, users) => {
       mongoose.connection.close();
+      users.forEach(user => {
+          user.password = "";
+      })
       res.json(users);
     });
   },
