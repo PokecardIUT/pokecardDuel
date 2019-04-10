@@ -24,13 +24,19 @@ router.post("/api/cardUpdate", api.addCardToUser);
 
 router.post("/api/cardRemove", api.removeCardToUser);
 
-router.get("/api/randomCard", api.randomCard);
+router.post("/api/setUpdate", api.addSetToUser)
 
-router.get("/api/users", api.getUsers);
+router.get("/api/randomCard", api.randomCard)
 
-router.post("/api/trade", api.trade);
+router.get("/api/cardsCount", api.getCardsCount)
 
-//Parms :
+router.get("/api/users", api.getUsers)
+
+router.get("/api/user", api.getUser);
+
+router.post("/api/trade", api.trade)
+
+//Parms : 
 //page -> number of page
 //pageSize -> number of card in one page
 router.get("/api/cards/:id", api.getCardBySetAndPage);

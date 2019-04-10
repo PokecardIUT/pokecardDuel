@@ -73,6 +73,16 @@ var message = {
         message: "Voici tout les utilisateurs de la base de données",
         data: data
       };
+    },
+    
+    updateSet: {
+      code: 200,
+      message: "Decks mis à jour"
+    },
+
+    userFind: {
+      code: 200,
+      message: "Utilisateur trouvé"
     }
   }
 };
