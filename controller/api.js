@@ -274,7 +274,7 @@ var api = {
     );
     User.find((err, users) => {
       mongoose.connection.close();
-      res.json(message.success.users(users));
+      res.json(users);
     });
   },
   trade: (req, res) => {
