@@ -55,7 +55,7 @@ Lorsque le projet est installé il faut se mettre sur la racine et installer les
 
       `npm install`
       
-Quand l'installation est finiz vous n'avez plus qu'à lancer le serveur avec cette commande : 
+Quand l'installation est fini vous n'avez plus qu'à lancer le serveur avec cette commande : 
 
       `npm start`
 
