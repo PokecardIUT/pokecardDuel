@@ -295,8 +295,10 @@ var api = {
         }
       });
       if (firstUser != undefined && secondUser != undefined) {
+        let firstCard = JSON.parse(req.body.cards[0]);
+        let secondCard = JSON.parse(req.body.cards[1]);
         let tmp = firstUser.cards.filter(element => {
-          if (req.body.cards[0].id !== element.id) {
+          if (firstCard.id !== element.id) {
             return element;
           }
         });
@@ -306,7 +308,7 @@ var api = {
           firstUser.cards = tmp;
 
           tmp = secondUser.cards.filter(element => {
-            if (req.body.cards[1].id !== element.id) {
+            if (secondCard.id !== element.id) {
               return element;
             }
           });
@@ -316,8 +318,8 @@ var api = {
           } else {
             secondUser.cards = tmp;
 
-            firstUser.cards.push(req.body.cards[1]);
-            secondUser.cards.push(req.body.cards[0]);
+            firstUser.cards.push(secondCard);
+            secondUser.cards.push(firstCard);
 
             firstUser.save(function (err) {
               if (err) {
@@ -332,11 +334,11 @@ var api = {
             let data = [
               {
                 username: firstUser.username,
-                message: "A eu cette carte: " + req.body.cards[1].id
+                message: "A eu cette carte: " + secondCard.id
               },
               {
                 username: secondUser.username,
-                message: "A eu cette carte: " + req.body.cards[0].id
+                message: "A eu cette carte: " + firstCard.id
               }
             ];
             res.json(message.success.trade(data));
