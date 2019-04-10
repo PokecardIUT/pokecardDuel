@@ -91,15 +91,9 @@ var api = {
       }
     });
   },
-<<<<<<< HEAD
   removeCardToUser: function(req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
       () => {},
-=======
-  removeCardToUser: function (req, res) {
-    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => { },
->>>>>>> master
       err => {
         res.json(message.error.database);
       }
@@ -133,11 +127,6 @@ var api = {
       }
     });
   },
-<<<<<<< HEAD
-  randomCard: function(req, res) {
-    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => {},
-=======
 
   addSetToUser: function (req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
@@ -203,7 +192,6 @@ var api = {
   randomCard: function (req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
       () => { },
->>>>>>> master
       err => {
         res.json(message.error.database);
       }
@@ -214,40 +202,6 @@ var api = {
         res.json(message.error.database);
       }
       if (user != null) {
-<<<<<<< HEAD
-        if (user.cards.length != 0) {
-          const url = `${API_URL_CARDS}?setCode=${req.query.id}&pageSize=${
-            req.query.pageSize
-          }&page=${req.query.page}`;
-          fetch(url)
-            .then(response => response.json())
-            .then(data => {
-              user.cards.forEach(element => {
-                data.cards = data.cards.filter(card => {
-                  if (card.id !== element.id) {
-                    return card;
-                  }
-                });
-              });
-
-              let cards = [];
-
-              for (let i = 0; i < req.query.nbCard; ++i) {
-                let index = Math.floor(
-                  Math.random() * Math.floor(data.cards.length - 1)
-                );
-                cards.push(data.cards[index]);
-                data.cards.splice(index, 1);
-              }
-              user.cards.push(...cards);
-
-              user.save(function(err) {
-                if (err) {
-                  res.json(message.error.database);
-                } else {
-                  mongoose.connection.close();
-                  return res.json(message.success.randomCard(data));
-=======
         const url = `${API_URL_CARDS}?setCode=${req.query.id}&pageSize=${
           req.query.pageSize
           }&page=${req.query.page}`;
@@ -258,7 +212,6 @@ var api = {
               data.cards = data.cards.filter(card => {
                 if (card.id !== element.id) {
                   return card;
->>>>>>> master
                 }
               });
             });
@@ -290,12 +243,6 @@ var api = {
         res.json(message.error.noUser);
       }
     });
-<<<<<<< HEAD
-  },
-  getUsers: (req, res) => {
-    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => {},
-=======
   },
   getUser: function (req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
@@ -321,14 +268,12 @@ var api = {
   getUsers: (req, res) => {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
       () => { },
->>>>>>> master
       err => {
         res.json(message.error.database);
       }
     );
     User.find((err, users) => {
       mongoose.connection.close();
-<<<<<<< HEAD
       res.json(message.success.users(users));
     });
   },
@@ -401,9 +346,6 @@ var api = {
         res.json(message.error.noUser);
       }
       mongoose.connection.close();
-=======
-      res.json(users);
->>>>>>> master
     });
   }
 };
