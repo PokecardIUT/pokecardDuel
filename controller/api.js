@@ -9,7 +9,7 @@ const API_URL_SETS = "https://api.pokemontcg.io/v1/sets";
 const API_URL_CARDS = "https://api.pokemontcg.io/v1/cards";
 
 var api = {
-  getSets: function (req, res) {
+  getSets: function(req, res) {
     const url = `${API_URL_SETS}`;
     fetch(url)
       .then(response => response.json())
@@ -21,7 +21,7 @@ var api = {
       });
   },
 
-  getAllCardsBySet: function (req, res) {
+  getAllCardsBySet: function(req, res) {
     const query = { id: req.params.id };
     const url = `${API_URL_CARDS}?setCode=${query.id}&pageSize=1000`;
     fetch(url)
@@ -34,7 +34,7 @@ var api = {
       });
   },
 
-  getCardBySetAndPage: function (req, res) {
+  getCardBySetAndPage: function(req, res) {
     const query = {
       id: req.params.id,
       page: req.query.page,
@@ -42,7 +42,7 @@ var api = {
     };
     const url = `${API_URL_CARDS}?setCode=${query.id}&pageSize=${
       query.pageSize
-      }&page=${query.page}`;
+    }&page=${query.page}`;
     fetch(url)
       .then(response => response.json())
       .then(cards => {
@@ -53,15 +53,15 @@ var api = {
       });
   },
 
-  addCardToUser: function (req, res) {
+  addCardToUser: function(req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => { },
+      () => {},
       err => {
         res.json(message.error.database);
       }
     );
 
-    User.findOne({ username: req.body.username }, function (err, user) {
+    User.findOne({ username: req.body.username }, function(err, user) {
       if (err) {
         res.json(message.error.database);
       }
@@ -78,7 +78,7 @@ var api = {
           });
         }
         // save cards to user
-        user.save(function (err) {
+        user.save(function(err) {
           if (err) {
             res.json(message.error.database);
           } else {
@@ -91,15 +91,15 @@ var api = {
       }
     });
   },
-  removeCardToUser: function (req, res) {
+  removeCardToUser: function(req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => { },
+      () => {},
       err => {
         res.json(message.error.database);
       }
     );
 
-    User.findOne({ username: req.body.username }, function (err, user) {
+    User.findOne({ username: req.body.username }, function(err, user) {
       if (err) {
         res.json(message.error.database);
       }
@@ -114,7 +114,7 @@ var api = {
           });
         }
         // save cards to user
-        user.save(function (err) {
+        user.save(function(err) {
           if (err) {
             res.json(message.error.database);
           } else {
@@ -197,7 +197,7 @@ var api = {
       }
     );
 
-    User.findOne({ username: req.query.username }, function (err, user) {
+    User.findOne({ username: req.query.username }, function(err, user) {
       if (err) {
         res.json(message.error.database);
       }
@@ -274,7 +274,78 @@ var api = {
     );
     User.find((err, users) => {
       mongoose.connection.close();
-      res.json(users);
+      res.json(message.success.users(users));
+    });
+  },
+  trade: (req, res) => {
+    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
+      () => {},
+      err => {
+        res.json(message.error.database);
+      }
+    );
+    User.find((err, users) => {
+      let firstUser, secondUser;
+      users.forEach(user => {
+        if (user.username === req.body.users[0].username) {
+          firstUser = user;
+        }
+        if (user.username === req.body.users[1].username) {
+          secondUser = user;
+        }
+      });
+      if (firstUser != undefined && secondUser != undefined) {
+        let tmp = firstUser.cards.filter(element => {
+          if (req.body.cards[0].id !== element.id) {
+            return element;
+          }
+        });
+        if (tmp === undefined) {
+          res.json(message.error.existantCard);
+        } else {
+          firstUser.cards = tmp;
+
+          tmp = secondUser.cards.filter(element => {
+            if (req.body.cards[1].id !== element.id) {
+              return element;
+            }
+          });
+
+          if (tmp === undefined) {
+            res.json(message.error.existantCard);
+          } else {
+            secondUser.cards = tmp;
+
+            firstUser.cards.push(req.body.cards[1]);
+            secondUser.cards.push(req.body.cards[0]);
+
+            firstUser.save(function(err) {
+              if (err) {
+                res.json(message.error.database);
+              }
+            });
+            secondUser.save(function(err) {
+              if (err) {
+                res.json(message.error.database);
+              }
+            });
+            let data = [
+              {
+                username: firstUser.username,
+                message: "A eu cette carte: " + req.body.cards[1].id
+              },
+              {
+                username: secondUser.username,
+                message: "A eu cette carte: " + req.body.cards[0].id
+              }
+            ];
+            res.json(message.success.trade(data));
+          }
+        }
+      } else {
+        res.json(message.error.noUser);
+      }
+      mongoose.connection.close();
     });
   }
 };
