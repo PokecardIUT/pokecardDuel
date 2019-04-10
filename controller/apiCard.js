@@ -1,26 +1,12 @@
-const jwt = require("jwt-simple");
 const mongoose = require("mongoose");
 var urlDatabase = require("../config/database");
 var User = require("../model/UserSchema.js");
 const message = require("../message/message.js");
 require("isomorphic-fetch");
 
-const API_URL_SETS = "https://api.pokemontcg.io/v1/sets";
 const API_URL_CARDS = "https://api.pokemontcg.io/v1/cards";
 
-var api = {
-  getSets: function (req, res) {
-    const url = `${API_URL_SETS}`;
-    fetch(url)
-      .then(response => response.json())
-      .then(sets => {
-        return res.json(sets);
-      })
-      .catch(error => {
-        return res.json(error);
-      });
-  },
-
+var apiCard = {
   getAllCardsBySet: function (req, res) {
     const query = { id: req.params.id };
     const url = `${API_URL_CARDS}?setCode=${query.id}&pageSize=1000`;
@@ -91,6 +77,7 @@ var api = {
       }
     });
   },
+
   removeCardToUser: function (req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
       () => { },
@@ -128,35 +115,6 @@ var api = {
     });
   },
 
-  addSetToUser: function (req, res) {
-    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => { },
-      err => {
-        res.json(message.error.database);
-      }
-    );
-
-    User.findOne({ username: req.body.username }, function (err, user) {
-      if (err) {
-        res.json(message.error.database);
-      }
-      if (user != null) {
-        obj = JSON.parse(req.body.set)
-        user.sets.push(obj);
-        // save cards to user
-        user.save(function (err) {
-          if (err) {
-            res.json(message.error.database);
-          } else {
-            mongoose.connection.close();
-            res.json(message.success.updateSet);
-          }
-        });
-      } else {
-        res.json(message.error.noUser);
-      }
-    });
-  },
   getCardsCount: (req, res) => {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
       () => { },
@@ -189,6 +147,7 @@ var api = {
       }
     })
   },
+
   randomCard: function (req, res) {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
       () => { },
@@ -244,39 +203,7 @@ var api = {
       }
     });
   },
-  getUser: function (req, res) {
-    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => { },
-      err => {
-        res.json(message.error.database);
-      }
-    );
 
-    User.findOne({ username: req.query.username }, function (err, user) {
-      if (err) {
-        res.json(message.error.database);
-      }
-
-      if (user != null) {
-        let response = { ...message.success.userFind, user };
-        res.json(response);
-      } else {
-        res.json(message.error.noUser);
-      }
-    });
-  },
-  getUsers: (req, res) => {
-    mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
-      () => { },
-      err => {
-        res.json(message.error.database);
-      }
-    );
-    User.find((err, users) => {
-      mongoose.connection.close();
-      res.json(users);
-    });
-  },
   trade: (req, res) => {
     mongoose.connect(urlDatabase.URL_ALL, { useNewUrlParser: true }).then(
       () => { },
@@ -352,4 +279,4 @@ var api = {
   }
 };
 
-module.exports = api;
+module.exports = apiCard;
