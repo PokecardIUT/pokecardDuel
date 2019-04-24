@@ -237,3 +237,28 @@ Route : `/api/trade`
   ```
   
   Type : `GET`
+
+##	L’application PokeCardDuel
+
+###	Installation
+
+Dans un premier temps il vous faut télécharger `l’installateur` de l’application (`APK`) qui se trouve en release dans le github de l’application que vous pouvez retrouver sur ce lien : 
+
+[https://github.com/PokecardIUT/pokecardApp/releases/tag/v1.0](https://github.com/PokecardIUT/pokecardApp/releases/tag/v1.0)
+
+Lorsque l’`APK` est téléchargée vous devrez la transférer sur votre téléphone puis cliquer dessus, pensez bien à activer l’installation d’application de `sources inconnues`
+
+###	Utilisation
+
+Tout d’abord si vous ne voulez pas vous connecter via `Facebook` ou `Google` il vous faut vous s’inscrire sur l’application en cliquant sur ` Première connexion `, celle-ci s’effectue par le formulaire présenté.
+
+Vous pourrez vous connecter à l’application via `Facebook`, `Google` ou par le formulaire sur l’écran de connexion.
+L’onglet `Recherche` vous permet de d’afficher tous les decks de l’api et de naviguer à travers eux, en cliquant dessus vous verrez toutes les cartes appartenant à ce deck et en cliquant sur une carte vous aurez un zoom de cette dernière.
+
+L’onglet `Mes decks` recense tout vos decks, vous pouvez en créer un via le bouton prévu à cet effet visible en cliquant sur le bouton « + », ce bouton montre également `l’échange de cartes` et `la boutique` sur la laquelle on peut récupérer 1, 3 ou 5 cartes de n’importe quel deck, ces cartes permettront justement de créer un deck, pour faire cela, vous devrez choisir 5 cartes parmi celles qui vous appartiennent en cliquant dessus, vous pouvez vous corriger en cliquant sur la carte dans la barre en bas de l’écran, une fois le deck constitué, vous pourrez lui donner un nom et une description en appuyant sur le bouton valider en bas à droite, il sera ensuite visible dans `Mes decks`.
+
+Toujours dans les actions du bouton « + », en cliquant sur `Echange de cartes` vous pourrez échanger des cartes avec un autre utilisateur en cliquant sur la carte que vous voulez échanger puis sur le pseudonyme de l’utilisateur avec qui vous voulez faire l’échange dans la liste déroulante qui vous sera présentée et en choisissant une carte à échanger parmi celles proposées, ensuite vos deux cartes seront échangées.
+
+L’onglet `Classement` montre tous les meilleurs joueurs de l’application.
+
+Et enfin l’onglet `Mon compte` permettant de vous déconnecter ou encore de supprimer votre compte.
