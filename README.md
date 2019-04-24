@@ -62,3 +62,178 @@ Quand l'installation est finie vous n'avez plus qu'à lancer le serveur avec cet
 Vous pouvez accéder aux serveurs grâce à cette adresse :
 
       `localhost:5000`
+
+
+## Les différentes routes
+
+### Authentification et inscription
+
+- Inscription :
+
+ Route : `/signup` 
+ 
+ Parmetre : 
+  ```JSON
+  {
+   "username":"",
+   "password":"",
+  }
+  ```
+  Type : `POST`
+  
+ - Connexion par email
+
+ Route : `/login/email` 
+
+ Parmetre : 
+  ```JSON
+  {
+    "username":"",
+    "password":"",
+  }
+  ```
+  
+  Type : `POST`
+  
+- Connexion par un service (Facebook, Google ...)
+
+ Route : `/login/service`
+
+ Parmetre : 
+  ```JSON
+  {
+    "username":"",
+    "secret":"",
+  }
+  ```
+  
+  Type : `POST`
+
+### Decks
+
+- Récupere les decks
+
+ Route : `/api/decks` 
+ 
+ Type : `GET`
+
+- Mettre à jour les decks de l'utilisateur
+
+ Route : `/api/setUpdate`
+
+ Parmetre : 
+  ```JSON
+  {
+   "username":""
+   "set": Set
+  }
+  ```
+  
+  Type : `POST`
+
+### Cartes
+
+- Récuperer toutes les cartes d'un deck
+
+ Route : `/api/cards/:id/all`
+ 
+ Type : `GET`
+
+- Ajouter une carte à l'utilisateur
+
+ Route : `/api/cardUpdate`
+
+ Parmetre : 
+  ```JSON
+  {
+    "username": "",
+    "card": Card
+  }
+  ```
+  
+  Type : `POST`
+
+- Supprimer une carte d'un utilisateur
+
+ Route : `/api/cardRemove`
+
+ Parmetre : 
+  ```JSON
+  {
+     "username": "",
+     "card": Card
+  }
+  ```
+  
+  Type : `POST`
+
+- Récuperation de carte aléatoire
+
+ Route : `/api/randomCard`
+
+ Parmetre : 
+  ```JSON
+  {
+    "username":""
+    "setCode":""
+    "pageSize":""
+    "page":""
+  }
+  ```
+  Type : `GET`
+  
+- Nombre restant de carte dans un deck
+
+ Route : `/api/cardsCount`
+
+ Parmetre : 
+  ```JSON
+  {
+    "username":""
+    "setCode":""
+    "pageSize":""
+    "page":""
+  }
+  ```
+  Type : `GET`
+  
+- Echangé des cartes entre deux utilisateurs
+
+Route : `/api/trade`
+
+ Parmetre : 
+  ```JSON
+  {
+    "users": [
+      "",
+      "",
+    ],
+    "cards": [
+     Card,
+     Card,
+    ]
+  }
+  ```
+  
+  Type : `POST`
+  
+### Utilisateur
+
+- Récuperer tous les utilisateurs
+
+ Route : `/api/users`
+
+ Type : `GET`
+
+- Récuperer un utilisateur
+
+ Route : `/api/user`
+
+ Parmetre : 
+  ```JSON
+  {
+   "username": ""
+  }
+  ```
+  
+  Type : `GET`
