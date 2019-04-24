@@ -8,7 +8,7 @@
  - Affichage des différents decks de cartes pokémon
  - Affichage des cartes pokémon
  - Création d'un deck
- - Débloquage de carte aléatoirement
+ - Déblocage de carte aléatoirement
  - Classement
 
 
@@ -20,7 +20,7 @@
  - MongoDB (NoSQL, JSON)
  - API: pokemontcg.io (Possède toutes les cartes des différents decks de pokemon)
 
-### Bibliotèques
+### Bibliothèques
 
   - Mongoose est une dépendance qui permet de communiquer avec la base de données.
   - JWT-simple permet de créer des Json web token qui nous permettront de sécuriser l'accès à l'API.
@@ -35,11 +35,11 @@
  - Message
     - Ce dossier permet de centraliser tous les messages renvoyés par l'API
  - Middlewares
-    - Ce dossier contient un middleware à fin de vérifier si l'utilisateur à accès à la route.
+    - Ce dossier contient un middleware afin de vérifier si l'utilisateur a accès à la route.
  - Routes
     - Ce dossier contient toutes les routes de l'API
  - Model
-    - Ce dossier contient tous les models utilisés par l'API
+    - Ce dossier contient tous les modèles utilisés par l'API
 
 ## Guide d'installation
 
@@ -111,7 +111,7 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
 ### Decks
 
-- Récupere les decks
+- Récupérer les decks
 
  Route : `/api/decks` 
  
@@ -133,7 +133,7 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
 ### Cartes
 
-- Récuperer toutes les cartes d'un deck
+- Récupérer toutes les cartes d'un deck
 
  Route : `/api/cards/:id/all`
  
@@ -197,7 +197,7 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
   ```
   Type : `GET`
   
-- Echangé des cartes entre deux utilisateurs
+- Échanger des cartes entre deux utilisateurs
 
 Route : `/api/trade`
 
@@ -219,13 +219,13 @@ Route : `/api/trade`
   
 ### Utilisateur
 
-- Récuperer tous les utilisateurs
+- Récupérer tous les utilisateurs
 
  Route : `/api/users`
 
  Type : `GET`
 
-- Récuperer un utilisateur
+- Récupérer un utilisateur
 
  Route : `/api/user`
 
