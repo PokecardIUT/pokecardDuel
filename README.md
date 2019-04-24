@@ -72,7 +72,7 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
  Route : `/signup` 
  
- Parmetre : 
+ Parametre : 
   ```JSON
   {
    "username":"",
@@ -85,7 +85,7 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
  Route : `/login/email` 
 
- Parmetre : 
+ Parametre : 
   ```JSON
   {
     "username":"",
@@ -99,7 +99,7 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
  Route : `/login/service`
 
- Parmetre : 
+ Parametre : 
   ```JSON
   {
     "username":"",
@@ -121,11 +121,11 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
  Route : `/api/setUpdate`
 
- Parmetre : 
+ Parametre : 
   ```JSON
   {
-   "username":""
-   "set": Set
+   "username":"",
+   "set": "Set",
   }
   ```
   
@@ -143,11 +143,11 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
  Route : `/api/cardUpdate`
 
- Parmetre : 
+ Parametre : 
   ```JSON
   {
     "username": "",
-    "card": Card
+    "card": "Card",
   }
   ```
   
@@ -157,11 +157,11 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
  Route : `/api/cardRemove`
 
- Parmetre : 
+ Parametre : 
   ```JSON
   {
      "username": "",
-     "card": Card
+     "card": "Card",
   }
   ```
   
@@ -171,13 +171,13 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
  Route : `/api/randomCard`
 
- Parmetre : 
+ Parametre : 
   ```JSON
   {
-    "username":""
-    "setCode":""
-    "pageSize":""
-    "page":""
+    "username":"",
+    "setCode":"",
+    "pageSize":"",
+    "page":"",
   }
   ```
   Type : `GET`
@@ -186,13 +186,13 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
  Route : `/api/cardsCount`
 
- Parmetre : 
+ Parametre : 
   ```JSON
   {
-    "username":""
-    "setCode":""
-    "pageSize":""
-    "page":""
+    "username":"",
+    "setCode":"",
+    "pageSize":"",
+    "page":"",
   }
   ```
   Type : `GET`
@@ -201,7 +201,7 @@ Vous pouvez accéder aux serveurs grâce à cette adresse :
 
 Route : `/api/trade`
 
- Parmetre : 
+ Parametre : 
   ```JSON
   {
     "users": [
@@ -209,9 +209,9 @@ Route : `/api/trade`
       "",
     ],
     "cards": [
-     Card,
-     Card,
-    ]
+     "Card",
+     "Card",
+    ],
   }
   ```
   
@@ -229,10 +229,10 @@ Route : `/api/trade`
 
  Route : `/api/user`
 
- Parmetre : 
+ Parametre : 
   ```JSON
   {
-   "username": ""
+   "username": "",
   }
   ```
   
